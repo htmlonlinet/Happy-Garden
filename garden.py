@@ -39,3 +39,20 @@ def draw():
       str(time_elapsed) + " seconds",
       topleft=(10,10), color="black"
     )
+def new_flower():
+  pass
+
+def add_flowers():
+  pass
+
+def check_flower_collisions():
+  pass
+
+def reset_cow():
+  pass
+
+def update():
+  pass
+
+def update():
+ pass
