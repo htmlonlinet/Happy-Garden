@@ -37,22 +37,43 @@ def draw():
     screen.draw.text(
       "Garden happy for:" + 
       str(time_elapsed) + " seconds",
-      topleft=(10,10), color="black"
+      topleft=(10,10), color="black"1
     )
-def new_flower():
-  pass
+def new_flower():  
+  global flower_list, wilted_list
+  flower_new = Actor("flower")
+  flower_new.pos = randint(50, WIDTH - 50) randint(150, HEIGHT - 100)
+  flower_list.append(flower_new)
+  wilted_list.append("happy")
+  return
 
 def add_flowers():
-  pass
+  global game_over
+  if not game_over:
+    new_flower()
+    clock.schedule(add_flower, 4)
+  return
 
 def check_flower_collisions():
-  pass
-
+  
 def reset_cow():
-  pass
+  global flower_list, wilted_lsit
+  flower_new = Actor("flower")
+  flower_new.pos = randint(50, WIDTH -50), randint(150, HEIGHT - 100)
+  flower_list.append(flower_new)
+  wilted_list.append("happy")
+  return
 
 def update():
-  pass
-
-def update():
- pass
+  global score, game_over, fangflower_collison
+  global flower_list, fangflower_list, time_elapsed
+  if not game_over:
+    if keyboard.left and cow.x > 0:
+      cow.x -= 5
+  elif keyboard.right and cow.x < WIDTH:
+    cow.x += 5
+  elif keyboard.up and cow.y > 150:
+    cow.y -= 5
+  elif keyboard.down and cow.y < HEIGHT:
+    cow.y += 5
+   
