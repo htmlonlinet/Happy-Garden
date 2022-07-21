@@ -54,20 +54,54 @@ def add_flowers():
     clock.schedule(add_flower, 4)
   return
 
-def check_flower_collisions():
-  
-def reset_cow():
-  global flower_list, wilted_lsit
-  flower_new = Actor("flower")
-  flower_new.pos = randint(50, WIDTH -50), randint(150, HEIGHT - 100)
-  flower_list.append(flower_new)
-  wilted_list.append("happy")
+def check_wilt_times():
+  global wilted_list, game_over, garden_happy
+  if wilted_list:
+    for wilted_since in wilted_list:
+      if (not wilted_since == "happy"):
+        time_wilted = int(time.time() - wilted_since)
+        if (time_wilted) > 10.0:
+          garden_happy = False
+          game_over = False
+          break
   return
 
+def wilt_flowers():
+  global flower_list, wilted_list, game_over
+  if not game_over:
+    if flower_list:
+      rand_flower = randint*(0, len(flower_list) - 1)
+      if (flower_list[rand_flower].image == "flower"):
+        flower_list[rand_flower].image = "flower-wilt"
+        wilted_list[rand_flower] = time.time()
+        clock.schedule(wilt_flower, 3)
+return
+def check_flower_collisions():
+  global cow, flower_list, wilted_list
+  index = 0
+  for flower in flower_list:
+    if (flower.colliderect(cow) and 
+            flower.image == "flower-wilt"):
+      flower.image = "flower"
+      wilted_list[index] = "happy"
+      break
+   index = index + 1
+  return
+def reset_cow():
+  global game_over
+  if not game_over:
+    cow.image ="cow"
+  return
+
+add_flowers()
 def update():
   global score, game_over, fangflower_collison
   global flower_list, fangflower_list, time_elapsed
   if not game_over:
+    if keyboard.space:
+      cow.image = "cow-water"
+      clock.schedule(reset_cow, 0.5)
+      check_for_collision()
     if keyboard.left and cow.x > 0:
       cow.x -= 5
   elif keyboard.right and cow.x < WIDTH:
